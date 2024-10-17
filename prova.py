@@ -7,7 +7,7 @@ print(80/3)
 name = "Matteo"
 surname = "Bollecchino"
 
-print("My name is "+ name + " " +surname)
+print("My name is "+ name + " " + surname)
 print("M" in name)
 
 def my_first_function():
@@ -16,4 +16,12 @@ def my_first_function():
 def dummy_function():
     pass
 
+def printf_ten_string(string):
+
+    for i in range(10):
+        print(string, end=", ") #stampa senza andare a capo
+
+
 my_first_function()
+printf_ten_string("Ciao ")
+
