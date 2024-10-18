@@ -20,7 +20,7 @@ def write_dict_to_csv(filename, dict_file, first_time):
         f = open(filename,  'w', newline="") 
     else:
         f = open(filename,  'a', newline="")
-        
+
     w = csv.DictWriter(f,dict_file.keys())
 
     if first_time:
@@ -28,6 +28,17 @@ def write_dict_to_csv(filename, dict_file, first_time):
 
     w.writerow(dict_file)
     f.close()
+
+def conversione_tempo(seconds):
+    minutes, seconds = divmod(seconds, 60)
+    hours, minutes = divmod(minutes, 60)
+    return "%d:%02d:%02d" % (hours, minutes, seconds)
+
+def print_battery_information():
+    battery = psutil.sensors_battery()
+    print("Percentuale batteria: ", battery.percent)
+    print("Attaccato alla corrente: ", battery.power_plugged)
+    print("Tempo rimanente: ", conversione_tempo(battery.secsleft))
 
 # main function
 first_time = True
@@ -39,4 +50,5 @@ if __name__ == "__main__":
         # print("user time: " + str(u_t) + ", idle time: " + str(i_t))
         # print("user time: %.2f, idel time: %.2f" % (u_t, i_t))
         print(cpu_dict)
+        print_battery_information()
         sleep(1)
