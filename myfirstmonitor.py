@@ -22,7 +22,7 @@ def time_conversion(seconds):
     hours, minutes = divmod(minutes, 60)
     return "%d:%02d:%02d" % (hours, minutes, seconds)
 
-def read_battery_information(cp):
+def read_battery_information():
     battery = psutil.sensors_battery()
     print("Percentuale batteria: ", battery.percent)
     print("Attaccato alla corrente: ", battery.power_plugged)
