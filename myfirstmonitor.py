@@ -24,13 +24,15 @@ def time_conversion(seconds):
 
 def read_battery_information():
     battery = psutil.sensors_battery()
-    print("Percentuale batteria: ", battery.percent)
-    print("Attaccato alla corrente: ", battery.power_plugged)
-    print("Tempo rimanente: ", time_conversion(battery.secsleft))
+    battery_dict = {"battery percentage: ": battery.percent, "power plugged ": battery.power_plugged, "time left: ": time_conversion(battery.secsleft)}
+    return battery_dict
 
 # Function for Memory
 def read_memory_usage():
-    pass
+    memory = psutil.virtual_memory()
+    memory_dict = {"total memory ": memory.total, "available memory ": memory.available, "percentage usage ": memory.percent}
+    return memory_dict
+
 
 # Function for Excel File
 def write_dict_to_csv(filename, dict_file, first_time):
@@ -56,11 +58,11 @@ if __name__ == "__main__":
         memory_dict = read_memory_usage()
         write_dict_to_csv("my_first_dataset.csv", cpu_dict,first_time)
         write_dict_to_csv("my_first_dataset.csv", battery_dict,first_time)
-        write_dict_to_csv("my_first_dataset.csv", memory_dict,first_time)
+        #write_dict_to_csv("my_first_dataset.csv", memory_dict,first_time)
         first_time = False
         # print("user time: " + str(u_t) + ", idle time: " + str(i_t))
         # print("user time: %.2f, idel time: %.2f" % (u_t, i_t))
         print(cpu_dict)
         print(battery_dict)
-        print(memory_dict)
+        #print(memory_dict)
         sleep(1)
