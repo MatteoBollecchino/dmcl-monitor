@@ -2,6 +2,7 @@
 # general goal: read every second the CPU usage
 
 import csv
+import signal
 from time import sleep
 # or: from time import *
 # or: import time 
@@ -50,10 +51,14 @@ def write_dict_to_csv(filename, dict_file, first_time):
     w.writerow(dict_file)
     f.close()
 
+def signal_handler(signal):
+    pass
+
 # Main Function
 first_time = True
 if __name__ == "__main__":
     while True:
+        signal_handler(signal.SIG_INT)
         dict = read_cpu_usage()
         dict.update(read_battery_information())
         dict.update(read_memory_usage())

@@ -1,15 +1,18 @@
+import random
 from pandas import read_csv
+from sklearn import tree
+from sklearn.metrics import accuracy_score, confusion_matrix
 from sklearn.model_selection import train_test_split
 
 # Main Function
-first_time = True
+# numpy.random.seed(42)
 if __name__ == "__main__":
     
     # 0) Load Dataset (Library: PANDAS / NUMPY)
 
     my_dataset = read_csv("./labelled_dataset.csv")
     label_obj = my_dataset["label"]
-    data_obj = my_dataset.drop(columns="label")
+    data_obj = my_dataset.drop(columns=["time", "datetime", "label"])
 
     # 1) Split Dataset
 
@@ -17,10 +20,22 @@ if __name__ == "__main__":
 
     # 2) Choose Classifier (Library: SCIKIT LEARN)
 
+    # Algorithm: Decision Tree in general
+    # Model: Decision Tree trained on the train data set (= Result of training the algorithm)
+
+    clf = tree.DecisionTreeClassifier()
+
     # 3) Train Classifier
+
+    clf.fit(train_data, train_label)
 
     # 4) Test Classifier
 
-    a = 1
+    predicted_labels = clf.predict(test_data)
+    acc_score = accuracy_score(test_label, predicted_labels)
+    print("Accuracy: " + str(acc_score))
 
-    pass
+    tn, fp, fn, tp = confusion_matrix(test_label, predicted_labels).ravel()
+    print("TP: "+str(tp)+" TN: "+str(tn)+" FP: "+str(fp)+" FN: "+str(fn))
+
+    a = 1
