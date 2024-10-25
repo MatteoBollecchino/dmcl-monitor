@@ -6,6 +6,7 @@ from time import sleep
 # or: from time import *
 # or: import time 
 import psutil
+import pandas as pd
 
 # Function for CPU
 def read_cpu_usage():
@@ -37,7 +38,7 @@ def read_memory_usage():
 # Function for Excel File
 def write_dict_to_csv(filename, dict_file, first_time):
     if first_time:
-        f = open(filename,  'w', newline="") 
+        f = open(filename,  'w+', newline="") 
     else:
         f = open(filename,  'a', newline="")
 
@@ -57,7 +58,7 @@ if __name__ == "__main__":
         dict.update(read_battery_information())
         dict.update(read_memory_usage())
 
-        write_dict_to_csv("my_first_dataset.csv", dict,first_time)
+        write_dict_to_csv("my_first_dataset.csv", dict, first_time)
         first_time = False
         print(dict)
         sleep(1)
