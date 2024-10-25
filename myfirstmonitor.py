@@ -61,3 +61,13 @@ if __name__ == "__main__":
         first_time = False
         print(dict)
         sleep(1)
+
+"""
+import pandas as pd
+
+# Carica il file CSV
+df = pd.read_csv('nome_file.csv')
+
+# Salva il file in formato Excel
+df.to_excel('nome_file.xlsx', index=False)
+"""
