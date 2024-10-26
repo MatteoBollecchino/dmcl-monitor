@@ -10,7 +10,7 @@ if __name__ == "__main__":
     
     # 0) Load Dataset (Library: PANDAS / NUMPY)
 
-    my_dataset = read_csv("./labelled_dataset.csv")
+    my_dataset = read_csv("labelled_dataset.csv")
     label_obj = my_dataset["label"]
     data_obj = my_dataset.drop(columns=["time", "datetime", "label"])
 
@@ -27,7 +27,7 @@ if __name__ == "__main__":
 
     # 3) Train Classifier
 
-    clf.fit(train_data, train_label)
+    clf = clf.fit(train_data, train_label)
 
     # 4) Test Classifier
 
