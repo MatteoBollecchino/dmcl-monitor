@@ -3,6 +3,7 @@
 
 import csv
 import signal
+import sys
 from time import sleep
 # or: from time import *
 # or: import time 
@@ -51,14 +52,23 @@ def write_dict_to_csv(filename, dict_file, first_time):
     w.writerow(dict_file)
     f.close()
 
-def signal_handler(signal):
-    pass
+def signal_handler_wrapper(signum, frame):
+    signal_handler()
+
+def signal_handler():
+    # Carica il file CSV
+    df_new = pd.read_csv('my_first_dataset.csv')
+
+    # Salva il file in formato Excel
+    df_new.to_excel('my_first_dataset.xlsx', index = False)
+    
+    sys.exit(0)
 
 # Main Function
 first_time = True
 if __name__ == "__main__":
+    signal.signal(signal.SIGINT, signal_handler_wrapper)
     while True:
-        signal_handler(signal.SIG_INT)
         dict = read_cpu_usage()
         dict.update(read_battery_information())
         dict.update(read_memory_usage())
