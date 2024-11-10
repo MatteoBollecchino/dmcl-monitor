@@ -117,19 +117,45 @@ if __name__ == "__main__":
     train_data, test_data, train_label, test_label = train_test_split(x, y, test_size=0.5)
 
     # choose, train and test classifier from PYOD
+    """
+    # Classifier con Risultati Inviati al prof
+
     MY_CLF = RandomForestClassifier(n_estimators=200, max_depth= 20, min_samples_leaf= 1, 
                                     max_features= "log2", bootstrap= True, class_weight= "balanced")
+    """
 
+    max_num_estimators = 20
+    list = []
+
+    # L'obiettivo è variare il numero di estimatori per il RandomForestClassifier e scegliere quello con 
+    # l'accuracy più alta
+
+    for i in range(max_num_estimators):
+        i += 1
+        MY_CLF = RandomForestClassifier(n_estimators=i)
+
+        MY_CLF = MY_CLF.fit(train_data, train_label)
+        predicted_labels = MY_CLF.predict(test_data)
+
+        # Computing metrics to understand how good an algorithm is
+        accuracy = sklearn.metrics.accuracy_score(test_label, predicted_labels)
+        list.append(accuracy)
+        
+    max_acc = max(list)
+    estimator = list.index(max_acc)+1
+    
+    MY_CLF = RandomForestClassifier(n_estimators=estimator)
     MY_CLF = MY_CLF.fit(train_data, train_label)
     predicted_labels = MY_CLF.predict(test_data)
 
     # Computing metrics to understand how good an algorithm is
     accuracy = sklearn.metrics.accuracy_score(test_label, predicted_labels)
     tn, fp, fn, tp = confusion_matrix(test_label, predicted_labels).ravel()
+    print("N_Estimators: "+str(estimator))
     print("%s: Accuracy is %.4f, TP: %d, TN: %d, FN: %d, FP: %d" % (
     MY_CLF.__class__.__name__, accuracy,  tp, tn, fn, fp))
 
 
     # Generating files
     # To be uncommented whenever test files will be available
-    score_model(MY_CLF, STUDENT_NAME)
+    # score_model(MY_CLF, STUDENT_NAME)
